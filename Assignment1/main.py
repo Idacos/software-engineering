@@ -59,3 +59,25 @@ class SandwichMachine:
            Hint: no output"""
 
 ### Make an instance of SandwichMachine class and write the rest of the codes ###
+sandwich_machine = SandwichMachine(resources)
+
+while True:
+    choice = input("What would you like? (small/ medium/ large/ off/ report): ").lower()
+
+    ### print(f"User choice: {choice}") ###
+
+    if choice == "off":
+        print("Turning off the machine.")
+        break
+    elif choice == "report":
+        print(f"Bread: {sandwich_machine.machine_resources['bread']} slice(s)")
+        print(f"Ham: {sandwich_machine.machine_resources['ham']} slice(s)")
+        print(f"Cheese: {sandwich_machine.machine_resources['cheese']} ounce(s)")
+    elif choice in ["small", "medium", "large"]:
+        sandwich = recipes[choice]
+        if sandwich_machine.check_resources(sandwich["ingredients"]):
+            coins_inserted = sandwich_machine.process_coins()
+            if sandwich_machine.transaction_result(coins_inserted, sandwich["cost"]):
+                sandwich_machine.make_sandwich(choice, sandwich["ingredients"])
+    else:
+        print("Invalid choice, please try again.")
